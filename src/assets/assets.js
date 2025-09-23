@@ -98,7 +98,9 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor1@example.com', // ADD THESE
+        password: 'pass1'
     },
     {
         _id: 'doc2',
@@ -112,7 +114,9 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor2@example.com', // ADD THESE
+        password: 'pass2'
     },
     {
         _id: 'doc3',
@@ -126,7 +130,9 @@ export const doctors = [
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor3@example.com', // ADD THESE
+        password: 'pass3'
     },
     {
         _id: 'doc4',
@@ -140,7 +146,9 @@ export const doctors = [
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor4@example.com', // ADD THESE
+        password: 'pass4'
     },
     {
         _id: 'doc5',
@@ -154,7 +162,9 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor5@example.com', // ADD THESE
+        password: 'pass5'
     },
     {
         _id: 'doc6',
@@ -168,7 +178,9 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor6@example.com', // ADD THESE
+        password: 'pass6' 
     },
     {
         _id: 'doc7',
@@ -182,7 +194,9 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor7@example.com', // ADD THESE
+        password: 'pass7' 
     },
     {
         _id: 'doc8',
@@ -196,7 +210,9 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor8@example.com', // ADD THESE
+        password: 'pass8' 
     },
     {
         _id: 'doc9',
@@ -210,7 +226,9 @@ export const doctors = [
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor9@example.com', // ADD THESE
+        password: 'pass9' 
     },
     {
         _id: 'doc10',
@@ -224,7 +242,9 @@ export const doctors = [
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor10@example.com', 
+        password: 'pass10' 
     },
     {
         _id: 'doc11',
@@ -238,7 +258,9 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor11@example.com', 
+        password: 'pass11' 
     },
     {
         _id: 'doc12',
@@ -252,7 +274,9 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor12@example.com', 
+        password: 'pass12'
     },
     {
         _id: 'doc13',
@@ -266,7 +290,9 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor13@example.com', 
+        password: 'pass13'
     },
     {
         _id: 'doc14',
@@ -280,7 +306,9 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor14@example.com', // ADD THESE
+        password: 'pass14'
     },
     {
         _id: 'doc15',
@@ -294,7 +322,9 @@ export const doctors = [
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor15@example.com', // ADD THESE
+        password: 'pass15'
     },
     {
         _id: 'doc2',
@@ -308,6 +338,37 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        email: 'doctor16@example.com', // ADD THESE
+        password: 'pass16'
     },
 ]
+export const patients = [
+    {
+        _id: 'pat1',
+        name: 'Alice Johnson',
+        email: 'patient1@example.com',
+        password: 'patient1pass',
+        gender: 'female',
+        dob: '1990-05-15',
+        phone: '123-456-7890'
+    },
+    {
+        _id: 'pat2',
+        name: 'Bob Williams',
+        email: 'patient2@example.com',
+        password: 'patient2pass',
+        gender: 'male',
+        dob: '1985-11-20',
+        phone: '987-654-3210'
+    },
+    {
+        _id: 'pat3',
+        name: 'Charlie Brown',
+        email: 'patient3@example.com',
+        password: 'patient3pass',
+        gender: 'male',
+        dob: '2000-01-01',
+        phone: '555-123-4567'
+    }
+];
