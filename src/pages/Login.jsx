@@ -23,6 +23,9 @@ const Login = () => {
         e.preventDefault();
         setError('');
 
+        localStorage.removeItem('patientToken');
+        localStorage.removeItem('doctorToken');
+
         try {
             if (userType === 'patient') {
                 const patient = patients.find(p => p.email === email && p.password === password);

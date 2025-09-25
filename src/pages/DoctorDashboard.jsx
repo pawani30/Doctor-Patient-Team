@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DoctorContext } from '../context/DoctorContext';
 import { useNavigate } from 'react-router-dom';
 
+
 const DoctorDashboard = () => {
   const { dToken, doctorInfo } = useContext(DoctorContext);
   const navigate = useNavigate();

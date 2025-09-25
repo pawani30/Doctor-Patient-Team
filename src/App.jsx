@@ -15,6 +15,8 @@ import Footer from './components/Footer';
 import { DoctorProvider, DoctorContext } from "./context/DoctorContext";
 import { PatientContextProvider, PatientContext } from "./context/PatientContext";
 import DoctorDashboard from './pages/DoctorDashboard';
+import DocNav from './components/DocNav';
+import Sidebar from './components/Sidebar';
 
 const PrivateDoctorRoute = ({ children }) => {
     // Correctly checking for 'doctorToken'
@@ -38,7 +40,8 @@ const App = () => {
     <DoctorProvider>
     <PatientContextProvider>
     <div className="mx-4 sm:mx-[10%]">
-      <Navbar />
+      {localStorage.getItem('doctorToken') ? <DocNav /> : <Navbar />}
+      {localStorage.getItem('doctorToken')?<Sidebar/>:""}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/doctors" element={<Doctors />} />
