@@ -17,7 +17,7 @@ import { PatientContextProvider, PatientContext } from "./context/PatientContext
 import DoctorDashboard from './pages/DoctorDashboard';
 import DocNav from './components/DocNav';
 import Sidebar from './components/Sidebar';
-
+import DocAppointment from './pages/DocAppointment';
 const PrivateDoctorRoute = ({ children }) => {
     // Correctly checking for 'doctorToken'
     const storedToken = localStorage.getItem('doctorToken');
@@ -35,13 +35,22 @@ const PrivatePatientRoute = ({ children }) => {
     }
     return children;
 };
+
+const isDoctor = localStorage.getItem('doctorToken');
 const App = () => {
   return (
     <DoctorProvider>
     <PatientContextProvider>
-    <div className="mx-4 sm:mx-[10%]">
-      {localStorage.getItem('doctorToken') ? <DocNav /> : <Navbar />}
-      {localStorage.getItem('doctorToken')?<Sidebar/>:""}
+      <div>
+    {isDoctor ? <DocNav /> : <Navbar />}
+                
+                {/* 2. MAIN LAYOUT CONTAINER: This container enables side-by-side layout */}
+                <div className="flex mx-4 sm:mx-[10%]"> 
+                    {/* 3. SIDEBAR: Renders first on the left */}
+                    {isDoctor ? <Sidebar /> : null}
+                    {/* 4. MAIN CONTENT AREA: Renders next to the sidebar */}
+                    <main className={isDoctor ? "flex-grow ml-4" : "w-full"}> 
+          
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/doctors" element={<Doctors />} />
@@ -57,8 +66,17 @@ const App = () => {
             </PrivateDoctorRoute>
           }
         />
+         <Route
+          path="/appointments"
+          element={
+            <PrivateDoctorRoute>
+              <DocAppointment />
+            </PrivateDoctorRoute>
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        
         <Route 
               path="/my-profile" 
               element={
@@ -86,6 +104,8 @@ const App = () => {
               } 
             />
       </Routes>
+      </main>
+      </div>
       <Footer/>
     </div>
     </PatientContextProvider>
