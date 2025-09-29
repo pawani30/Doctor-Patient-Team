@@ -360,7 +360,8 @@ export const patients = [
         password: 'patient1pass',
         gender: 'female',
         dob: '1990-05-15',
-        phone: '123-456-7890'
+        phone: '123-456-7890',
+         image:assets.profile_pic
     },
     {
         _id: 'pat2',
@@ -369,7 +370,8 @@ export const patients = [
         password: 'patient2pass',
         gender: 'male',
         dob: '1985-11-20',
-        phone: '987-654-3210'
+        phone: '987-654-3210',
+         image:assets.profile_pic
     },
     {
         _id: 'pat3',
@@ -378,6 +380,49 @@ export const patients = [
         password: 'patient3pass',
         gender: 'male',
         dob: '2000-01-01',
-        phone: '555-123-4567'
+        phone: '555-123-4567',
+        image:assets.profile_pic
     }
+];
+
+export const mockAppointments = [
+    // APPOINTMENT 1: Dr. Richard James with Alice Johnson - ONLY IDs are stored
+    {
+        _id: 'appt_001', 
+        amount: 50,
+        cancelled: false,
+        date: 1730400000000,
+        docId: 'doc1', // Foreign Key
+        patId: 'pat1', // Foreign Key
+        isCompleted: false,
+        payment: true,
+        slotDate: "01_11_2024",
+        slotTime: "10:00 AM",
+    },
+    
+    // APPOINTMENT 2: Dr. Emily Larson with Bob Williams - ONLY IDs are stored
+    {
+        _id: 'appt_002', 
+        amount: 60,
+        cancelled: false,
+        date: 1730500000000,
+        docId: 'doc2', // Foreign Key
+        patId: 'pat2', // Foreign Key
+        isCompleted: false,
+        payment: false,
+        slotDate: "02_11_2024",
+        slotTime: "03:30 PM",
+    },
+    {
+        _id: 'appt_003', 
+        amount: 80,
+        cancelled: true,
+        date: 1730500000000,
+        docId: 'doc2', // Foreign Key
+        patId: 'pat3', // Foreign Key
+        isCompleted: true,
+        payment: true,
+        slotDate: "05_12_2024",
+        slotTime: "06:30 PM",
+    },
 ];
