@@ -14,7 +14,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const { setDToken } = useContext(DoctorContext) || {};
+    const doctorContext = useContext(DoctorContext) || {};
+const { handleLogin: doctorHandleLogin } = doctorContext;
     const { setPToken } = useContext(PatientContext) || {};
 
     const navigate = useNavigate();
@@ -26,8 +27,38 @@ const Login = () => {
         localStorage.removeItem('patientToken');
         localStorage.removeItem('doctorToken');
 
+        // try {
+        //     if (userType === 'patient') {
+        //         const patient = patients.find(p => p.email === email && p.password === password);
+        //         if (patient) {
+        //             const dummyToken = `fake-patient-token-${patient._id}`;
+        //             setPToken(dummyToken);
+        //             localStorage.setItem('patientToken', dummyToken);
+        //             console.log('Patient Login successful:', patient.name);
+        //             navigate('/'); 
+        //         } else {
+        //             throw new Error('Invalid patient email or password.');
+        //         }
+        //     } else { // userType === 'doctor'
+        //         const doctor = doctors.find(d => d.email === email && d.password === password);
+        //         if (doctor) {
+        //             const dummyToken = `fake-doctor-token-${doctor._id}`;
+        //             setDToken(dummyToken);
+        //             localStorage.setItem('doctorToken', dummyToken);
+        //             console.log('Doctor Login successful:', doctor.name);
+        //             navigate('/doctor-dashboard'); // Redirect doctor to their dashboard/doctors list
+        //         } else {
+        //             throw new Error('Invalid doctor email or password.');
+        //         }
+        //     }
+        // } catch (err) {
+        //     setError(err.message || 'An unexpected error occurred. Please try again.');
+        // }
+
         try {
-            if (userType === 'patient') {
+        let result;
+
+        if (userType === 'patient') {
                 const patient = patients.find(p => p.email === email && p.password === password);
                 if (patient) {
                     const dummyToken = `fake-patient-token-${patient._id}`;
@@ -39,21 +70,28 @@ const Login = () => {
                     throw new Error('Invalid patient email or password.');
                 }
             } else { // userType === 'doctor'
-                const doctor = doctors.find(d => d.email === email && d.password === password);
-                if (doctor) {
-                    const dummyToken = `fake-doctor-token-${doctor._id}`;
-                    setDToken(dummyToken);
-                    localStorage.setItem('doctorToken', dummyToken);
-                    console.log('Doctor Login successful:', doctor.name);
-                    navigate('/doctor-dashboard'); // Redirect doctor to their dashboard/doctors list
-                } else {
-                    throw new Error('Invalid doctor email or password.');
-                }
+            
+            // 🎯 CALL THE DOCTOR CONTEXT HANDLER (This function calls api.js/loginDoctor)
+            if (!doctorHandleLogin) {
+                throw new Error("Doctor login handler not available in context.");
             }
-        } catch (err) {
-            setError(err.message || 'An unexpected error occurred. Please try again.');
+            
+            result = await doctorHandleLogin(email, password);
+
+            if (result.success) {
+                // The context handler already sets the token and logs the message via console.log("Login Success Message:", result.message);
+                console.log(`Login successful! Message: ${result.message}`);
+                navigate('/doctor-dashboard');
+            } else {
+                // The context returns success: false and the error message on failure
+                throw new Error(result.message || 'Doctor login failed.');
+            }
         }
-    };
+    } catch (err) {
+        setError(err.message || 'An unexpected error occurred. Please try again.');
+    }
+};
+
 
     const handleSignup = async (e) => {
         e.preventDefault();
