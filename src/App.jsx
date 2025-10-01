@@ -18,6 +18,7 @@ import DoctorDashboard from './pages/DoctorDashboard';
 import DocNav from './components/DocNav';
 import Sidebar from './components/Sidebar';
 import DocAppointment from './pages/DocAppointment';
+
 const PrivateDoctorRoute = ({ children }) => {
     // Correctly checking for 'doctorToken'
     const storedToken = localStorage.getItem('doctorToken');

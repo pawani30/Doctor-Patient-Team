@@ -425,4 +425,104 @@ export const mockAppointments = [
         slotDate: "05_12_2024",
         slotTime: "06:30 PM",
     },
+       {
+        _id: 'appt_004', 
+        amount: 80,
+        cancelled: false,
+        date: 1730745600000, // Nov 4, 2024
+        docId: 'doc1', // Assigned to Doctor 1
+        patId: 'pat4',
+        isCompleted: false, // Not completed, but paid (future appt)
+        payment: true,
+        slotDate: "04_11_2024",
+        slotTime: "09:00 AM",
+    },
+
+    {
+        _id: 'appt_005', 
+        amount: 100,
+        cancelled: false,
+        date: 1730832000000, // Nov 5, 2024
+        docId: 'doc2', // Assigned to Doctor 2
+        patId: 'pat1',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "05_11_2024",
+        slotTime: "01:00 PM",
+    },
+    {
+        _id: 'appt_006', 
+        amount: 60,
+        cancelled: false,
+        date: 1730918400000, // Nov 6, 2024
+        docId: 'doc2', // Assigned to Doctor 2
+        patId: 'pat5',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "06_11_2024",
+        slotTime: "04:30 PM",
+    },
+    {
+        _id: 'appt_007', 
+        amount: 90,
+        cancelled: false,
+        date: 1731004800000, // Nov 7, 2024
+        docId: 'doc2', // Assigned to Doctor 2
+        patId: 'pat2',
+        isCompleted: false, // Cancelled, no earnings counted
+        payment: false,
+        slotDate: "07_11_2024",
+        slotTime: "10:00 AM",
+    },
+    
+    // --- Appointments for doc3 (Total Earnings: 150 + 200 = 350) ---
+
+    {
+        _id: 'appt_008', 
+        amount: 150,
+        cancelled: false,
+        date: 1731091200000, // Nov 8, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat6',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "08_11_2024",
+        slotTime: "03:00 PM",
+    },
+    {
+        _id: 'appt_009', 
+        amount: 200,
+        cancelled: false,
+        date: 1731177600000, // Nov 9, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat3',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "09_11_2024",
+        slotTime: "11:00 AM",
+    },
+    {
+        _id: 'appt_010', 
+        amount: 70,
+        cancelled: true,
+        date: 1731264000000, // Nov 10, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat4',
+        isCompleted: false, // Cancelled, no earnings counted
+        payment: true,
+        slotDate: "10_11_2024",
+        slotTime: "04:00 PM",
+    },
+    {
+        _id: 'appt_011', 
+        amount: 95,
+        cancelled: false,
+        date: 1731350400000, // Nov 11, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat7',
+        isCompleted: false, // Future appointment
+        payment: false,
+        slotDate: "11_11_2024",
+        slotTime: "08:30 AM",
+    }
 ];

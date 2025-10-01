@@ -41,7 +41,7 @@ const Login = () => {
             } else { // userType === 'doctor'
                 const doctor = doctors.find(d => d.email === email && d.password === password);
                 if (doctor) {
-                    const dummyToken = `fake-doctor-token-${doctor._id}`;
+                    const dummyToken = `${doctor._id}`;
                     setDToken(dummyToken);
                     localStorage.setItem('doctorToken', dummyToken);
                     console.log('Doctor Login successful:', doctor.name);
