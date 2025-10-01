@@ -336,7 +336,7 @@ export const doctors = [
         password: 'pass15'
     },
     {
-        _id: 'doc2',
+        _id: 'doc16',
         name: 'Dr. Emily Larson',
         image: doc2,
         speciality: 'Gastroenterologist',
@@ -382,6 +382,16 @@ export const patients = [
         dob: '2000-01-01',
         phone: '555-123-4567',
         image:assets.profile_pic
+    },
+    {
+        _id: 'pat4',
+        name: 'Lily Bloom',
+        email: 'patient4@example.com',
+        password: 'patient4pass',
+        gender: 'female',
+        dob: '2000-05-01',
+        phone: '556-123-4567',
+        image:assets.profile_pic
     }
 ];
 
@@ -425,4 +435,29 @@ export const mockAppointments = [
         slotDate: "05_12_2024",
         slotTime: "06:30 PM",
     },
+    {
+        _id: 'appt_004', 
+        amount: 90,
+        cancelled: true,
+        date: 1730500000000,
+        docId: 'doc1', // Foreign Key
+        patId: 'pat4', // Foreign Key
+        isCompleted: true,
+        payment: false,
+        slotDate: "05_02_2024",
+        slotTime: "06:30 PM",
+    },
+    {
+        _id: 'appt_005', 
+        amount: 80,
+        cancelled: true,
+        date: 1730500000000,
+        docId: 'doc3', // Foreign Key
+        patId: 'pat2', // Foreign Key
+        isCompleted: true,
+        payment: false,
+        slotDate: "05_02_2024",
+        slotTime: "06:30 PM",
+    },
+    
 ];

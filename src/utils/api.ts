@@ -7,14 +7,7 @@ const API_DELAY = 500; // 0.5 second delay
  * Simulates fetching all appointments from a server.
  * @returns {Promise<Array>} A promise that resolves with all mock appointments.
  */
-export const fetchAppointments = () => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log("API: Successfully retrieved all mock appointments.");
-            resolve(mockAppointments);
-        }, API_DELAY);
-    });
-};
+
 
 /**
  * Simulates a doctor login request.
@@ -24,12 +17,19 @@ export const fetchAppointments = () => {
  */
 export const loginDoctor = (email, password) => {
     return new Promise((resolve, reject) => {
+
+        console.log("DEBUG 1: loginDoctor function started."); 
+        console.log(`DEBUG 1.1: Attempting login for email: ${email}`);
+
         setTimeout(() => {
+            console.log("DEBUG 2: setTimeout finished. Starting doctor lookup.");
             // Data is retrieved from the 'doctors' array imported from assets.js
+            
             const doc = doctors.find(d => d.email === email && d.password === password);
             
             if (doc) {
-                console.log(`API: Login successful for Doctor ID: ${doc._id}`);
+                console.log("DEBUG 3: Doctor FOUND. Proceeding to resolve."); 
+                console.log(`API: Login successful for Doctor ID: ${doc._id}`); 
                 // Return the docId as the "token"
                 resolve({ 
                     success: true, 
@@ -37,8 +37,11 @@ export const loginDoctor = (email, password) => {
                     message: `Welcome, ${doc.name}!`
                 });
             } else {
+                console.error("DEBUG 4: Doctor NOT FOUND. Invalid credentials."); 
                 console.error("API: Login failed. Invalid credentials.");
-                reject(new Error("Invalid email or password."));
+                
+                // IMPORTANT: Ensure this reject path is hit if the find fails
+                reject(new Error("Invalid email or password.")); 
             }
         }, API_DELAY);
     });
