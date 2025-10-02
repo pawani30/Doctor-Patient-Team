@@ -1,16 +1,17 @@
 
 import React, { createContext, useState, useEffect } from 'react';
-import {loginDoctor, logoutDoctor } from '../utils/api';
+import {fetchAppointments,loginDoctor, logoutDoctor,fetchDoctorDashboardData } from '../utils/api';
 import { mockAppointments,doctors } from './../assets/assets';
 
 export const DoctorContext = createContext(null);
 
 export const DoctorProvider = ({ children }) => {
     // doctorToken will hold the docId after successful login, starting as null
-    const [doctorToken, setDToken] = useState(null); 
+    const [doctorToken, setDToken] = useState(localStorage.getItem("doctorToken")); 
     const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [dashboardData, setDashboardData] = useState(null); 
     
 
     // Initial check (once on mount) to see if a token exists in localStorage
@@ -39,23 +40,19 @@ export const DoctorProvider = ({ children }) => {
             setError(null);
             try {
                 const currentDoctorId = doctorToken; 
-
-                console.log("DoctorToken being used for filtering:", currentDoctorId);
-        
-        // --- LOGGING ALL APPOINTMENT DOC IDs ---
-        // 🎯 2. LOG ALL DOC IDs IN THE MOCK DATA
-        console.log("All Doc IDs in Mock Appointments:", mockAppointments.map(appt => appt.docId));
-        // --- END LOGGING ---
-
                 // 2. Filter the local data based on the logged-in doctor's ID/Token
                 const fetchedAppointments = mockAppointments.filter(
                     (appointment) => appointment.docId === currentDoctorId 
                     // 👆 Adjust 'doctorId' to match the key in your data structure
                 );
 
-                console.log("Number of appointments found after filtering:", fetchedAppointments.length);
-
                 setAppointments(fetchedAppointments);
+
+                if (currentDoctorId) {
+                    await loadDashboardData(currentDoctorId);
+                } else {
+                    console.log("No doctor token found. Waiting for login.");
+                }
             } catch (err) {
                 // This catch block will likely not be hit, as there's no network error
                 console.error("Error filtering appointments:", err);
@@ -78,12 +75,12 @@ export const DoctorProvider = ({ children }) => {
             const tokenValue = result.token;
 
             console.log("Login Success Message:", result.message);
-
+            localStorage.removeItem('patientToken');
            localStorage.setItem('doctorToken', tokenValue); // Store the actual ID ('doc1', 'doc2', etc.)
             setDToken(tokenValue);
             
-            return { success: true, token: tokenValue, message: result.message };
-
+                await loadDashboardData(tokenValue);
+            return result;
         } catch (err) {
             setError(err.message);
             setIsLoading(false); 
@@ -99,12 +96,41 @@ export const DoctorProvider = ({ children }) => {
             await logoutDoctor();
             localStorage.removeItem('doctorToken');
             setDToken(null);
+            setDashboardData(null); 
         } catch (err) {
             setError(err.message);
         } finally {
             setIsLoading(false);
         }
     };
+    // Helper function to call the dashboard fetcher
+    const loadDashboardData = async (docId) => {
+        if (!docId) return; 
+        try {
+            const response = await fetchDoctorDashboardData(docId);
+            
+            if (response.success) {
+                setDashboardData(response.dashData);
+                setError(null); // Clear any previous error on success
+            } else {
+                console.error("Failed to fetch dashboard data:", response.message);
+                setDashboardData(null); // 🛑 Clear data on API response failure
+            setError(response.message || "Failed to fetch dashboard data.")
+            }
+        } catch (error) {
+            console.error("Dashboard Fetch Error:", error);
+             setDashboardData(null); // 🛑 Clear data on network/internal failure
+        setError(error.message || "Dashboard Fetch Error.");
+        }
+    };
+    const getDashData = async () =>{
+        if(doctorToken) {
+            await loadDashboardData(doctorToken);
+        } else {
+            console.warn("Cannot call getDashData: Doctor token is not available.");
+        }
+    }
+
 
     const value = {
         doctorToken,
@@ -115,6 +141,8 @@ export const DoctorProvider = ({ children }) => {
         error,
         handleLogin,
         handleLogout,
+         dashboardData, 
+        getDashData ,
     };
 
      if (isLoading) { 
