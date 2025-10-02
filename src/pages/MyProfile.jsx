@@ -1,24 +1,90 @@
 import React from 'react'
-import { useState } from 'react';
-import { assets } from './../assets/assets';
+import { useState, useContext, useEffect } from 'react';
+import { assets, patients } from './../assets/assets';
+import { PatientContext } from './../context/PatientContext';
 
 
 const MyProfile = () => {
 
-  const [userData,setUserData]=useState({
-    name:"Edward Vincent",
-    image:assets.profile_pic,
-    email:'richardjameswap@gmail.com',
-    phone:'+1 123 456 7890',
-    address:{
-      line1:"57th Cross,Richmond",
-      line2:"Circle,Church Road,London"
-    },
-    gender:'Male',
-    dob:'2000-01-20'
-  })
+  // const [userData,setUserData]=useState({
+  //   name:"Edward Vincent",
+  //   image:assets.profile_pic,
+  //   email:'richardjameswap@gmail.com',
+  //   phone:'+1 123 456 7890',
+  //   address:{
+  //     line1:"57th Cross,Richmond",
+  //     line2:"Circle,Church Road,London"
+  //   },
+  //   gender:'Male',
+  //   dob:'2000-01-20'
+  // })
 
-  const[isEdit,setIsEdit]=useState(false)
+    const patientContext = useContext(PatientContext);
+    const pToken = patientContext ? patientContext.pToken : null;
+
+  const [userData, setUserData] = useState({
+        name: "Loading...",
+        image: assets.profile_pic,
+        email: '',
+        phone: '',
+        address: { line1: "", line2: "" },
+        gender: '',
+        dob: ''
+    });
+
+   const [isEdit, setIsEdit] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        if (pToken) {
+            // Find the patient using the ID stored in pToken
+            // NOTE: Assuming the pToken holds the clean patient ID (e.g., 'pat1') 
+            // and NOT the 'fake-patient-token-pat1' prefix, as fixed earlier.
+            const loggedInPatient = patients.find(p => p._id === pToken);
+
+            if (loggedInPatient) {
+                // Map the patient data to the component's userData state
+                setUserData({
+                    name: loggedInPatient.name,
+                    image: assets.profile_pic, // Use a default image if patient data doesn't include one
+                    email: loggedInPatient.email,
+                    phone: loggedInPatient.phone || 'N/A', // Assuming phone is an optional field
+                    address: {
+                        line1: loggedInPatient.address.line1 || '',
+                        line2: loggedInPatient.address.line2 || ''
+                    },
+                    gender: loggedInPatient.gender || 'N/A',
+                    dob: loggedInPatient.dob || 'N/A'
+                });
+            } else {
+                console.error("Patient data not found for token:", pToken);
+                // Optionally redirect to login or show an error
+            }
+        } else {
+            // No token found (not logged in)
+            console.log("No patient token available.");
+            // If you want to force redirect, use navigate('/login') here
+        }
+        setIsLoading(false);
+    }, [pToken]); // Reruns whenever the pToken state changes (login/logout)
+
+
+    const handleSave = () => {
+        // In a real application, you would call an API here to SAVE the data:
+        // await updatePatientProfile(pToken, userData);
+        
+        console.log("Saving updated data:", userData);
+        setIsEdit(false);
+    }
+    
+    if (isLoading) {
+        return <div className="max-w-lg p-4 text-lg">Loading patient profile...</div>;
+    }
+
+    if (!pToken) {
+         return <div className="max-w-lg p-4 text-lg text-red-600">You must be logged in to view this profile.</div>;
+    }
+
   return (
     <div className='max-w-lg flex flex-col gap-2 text-sm'>
       <img className='w-36 rounded' src={userData.image} alt="" />

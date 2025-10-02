@@ -16,7 +16,9 @@ const Login = () => {
 
     const doctorContext = useContext(DoctorContext) || {};
 const { handleLogin: doctorHandleLogin } = doctorContext;
-    const { setPToken } = useContext(PatientContext) || {};
+    
+const patientContext = useContext(PatientContext) || {};
+    const { handleLogin: patientHandleLogin } = patientContext;
 
     const navigate = useNavigate();
 
@@ -24,8 +26,6 @@ const { handleLogin: doctorHandleLogin } = doctorContext;
         e.preventDefault();
         setError('');
 
-        localStorage.removeItem('patientToken');
-        localStorage.removeItem('doctorToken');
 
         // try {
         //     if (userType === 'patient') {
@@ -59,17 +59,24 @@ const { handleLogin: doctorHandleLogin } = doctorContext;
         let result;
 
         if (userType === 'patient') {
-                const patient = patients.find(p => p.email === email && p.password === password);
-                if (patient) {
-                    const dummyToken = `fake-patient-token-${patient._id}`;
-                    setPToken(dummyToken);
-                    localStorage.setItem('patientToken', dummyToken);
-                    console.log('Patient Login successful:', patient.name);
-                    navigate('/'); 
-                } else {
-                    throw new Error('Invalid patient email or password.');
-                }
-            } else { // userType === 'doctor'
+            
+            // 👇 CHANGE 2: Call the Patient Context Handler
+            if (!patientHandleLogin) {
+                throw new Error("Patient login handler not available in context.");
+            }
+            
+            result = await patientHandleLogin(email, password);
+
+            if (result.success) {
+                // The patient context handler sets the token and logs the message
+                console.log(`Patient Login successful! Message: ${result.message}`);
+                navigate('/'); 
+            } else {
+                // Handle error returned from the PatientContext
+                throw new Error(result.message || 'Patient login failed.');
+            }
+            
+        } else { // userType === 'doctor'
             
             // 🎯 CALL THE DOCTOR CONTEXT HANDLER (This function calls api.js/loginDoctor)
             if (!doctorHandleLogin) {

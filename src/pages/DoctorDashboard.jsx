@@ -2,6 +2,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DoctorContext } from '../context/DoctorContext';
 import { useNavigate } from 'react-router-dom';
+import {mockAppointments} from '../assets/assets';
+import Sidebar from '../components/Sidebar';
+import MetricsCard from '../components/MetricsCard'; 
+import LatestAppointmentList from '../components/LatestAppointmentList';
+import { assets } from '../assets/assets';
+
+
 
 
 const DoctorDashboard = () => {
@@ -9,71 +16,63 @@ const DoctorDashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [appointments, setAppointments] = useState([]);
+  const {  dashboardData, isLoading, error } = useContext(DoctorContext);
+
 
   // This effect checks for a token and fetches data
-  useEffect(() => {
-    // Redirect if no token is found (simple route protection)
-    // if (!dToken) {
-    //   navigate('/login');
-    //   return;
-    // }
+  // useEffect(() => {
+  //    // Fetch data when the component mounts or when dependencies change
+  //       if (!dashboardData) {
+  //            getDashData();
+  //       }
+  //   }, [getDashData, dashboardData]);
 
-    // This is placeholder logic. In a real app, you would fetch data from your backend.
-    const fetchAppointments = async () => {
-      // Example of fetching appointments for the logged-in doctor
-      // const response = await fetch(`your-api-url/doctors/${doctorInfo._id}/appointments`);
-      // const data = await response.json();
-      
-      // Using mock data for now
-      const mockAppointments = [
-        { id: 1, patientName: "John Doe", date: "2025-10-25", time: "10:00 AM" },
-        { id: 2, patientName: "Jane Smith", date: "2025-10-26", time: "02:30 PM" },
-      ];
-      setAppointments(mockAppointments);
-      setLoading(false);
-    };
-
-    if (doctorInfo) {
-      fetchAppointments();
-    } else {
-      // Handle cases where doctorInfo might not be loaded yet
-      setLoading(false);
+    if (isLoading) {
+        return <div className="flex items-center justify-center min-h-screen">Loading Prescripto Dashboard...</div>;
+    }
+    // If data is null after loading (e.g., failed to fetch)
+    if (error || !dashboardData) {
+        return <div className="text-red-500 text-center mt-10">Error loading dashboard data.</div>;
     }
 
-  }, [dToken, doctorInfo, navigate]);
+    const { metrics, latestAppointments } = dashboardData;
 
-  if (loading) {
-    return <div>Loading dashboard...</div>;
-  }
+    // Prepare data structure for MetricsCard components
+    const metricsData = [
+        // Total doctors in the system (Admin metric)
+        {  title: 'Earnings', count: `$${metrics.earnings}`, icon: assets.arrow_icon}, 
+        // Appointments for the logged-in doctor
+        { title: 'Appointments', count: metrics.appointments, icon: assets.appointment_icon },
+        // Unique patients for the logged-in doctor
+        { title: 'Patients', count: metrics.patients, icon: assets.people_icon }, 
+    ];
 
-  return (
-    <div className="container mx-auto p-4">
-        
-      <h1 className="text-3xl font-bold mb-4">Doctor Dashboard</h1>
-      
-      {doctorInfo && (
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold">Welcome, Dr. {doctorInfo.name}!</h2>
-          <p>Email: {doctorInfo.email}</p>
-        </div>
-      )}
 
-      <div>
-        <h3 className="text-xl font-semibold mb-2">Upcoming Appointments</h3>
-        {appointments.length > 0 ? (
-          <ul className="list-disc pl-5">
-            {appointments.map(app => (
-              <li key={app.id}>
-                **Patient:** {app.patientName}, **Date:** {app.date}, **Time:** {app.time}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>You have no upcoming appointments.</p>
-        )}
-      </div>
-    </div>
-  );
-};
+ return (
+      <div className="flex-1 p-6 md:p-10">
+                <h1 className="text-2xl font-bold text-gray-800 mb-6">Prescripto Dashboard</h1>
+                
+                {/* 1. TOP METRICS CARDS SECTION */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    {metricsData.map((metric, index) => (
+                        <MetricsCard 
+                            key={index} 
+                            title={metric.title} 
+                            count={metric.count} 
+                            icon={metric.icon} 
+                            isAdmin={metric.admin}
+                        />
+                    ))}
+                </div>
+
+                {/* 2. LATEST APPOINTMENTS LIST SECTION */}
+                <div className="bg-white p-6 shadow-xl rounded-lg border border-gray-200">
+                    <h2 className="text-xl font-semibold mb-4 text-gray-700">Latest Appointment</h2>
+                    <LatestAppointmentList appointments={latestAppointments} />
+                </div>
+            </div>
+    );
+  };
+
 
 export default DoctorDashboard;

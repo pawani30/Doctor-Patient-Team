@@ -358,10 +358,14 @@ export const patients = [
         name: 'Alice Johnson',
         email: 'patient1@example.com',
         password: 'patient1pass',
-        gender: 'female',
+        gender: 'Female',
         dob: '1990-05-15',
         phone: '123-456-7890',
-         image:assets.profile_pic
+         image:assets.profile_pic,
+         address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     },
     {
         _id: 'pat2',
@@ -371,7 +375,11 @@ export const patients = [
         gender: 'male',
         dob: '1985-11-20',
         phone: '987-654-3210',
-         image:assets.profile_pic
+         image:assets.profile_pic,
+         address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     },
     {
         _id: 'pat3',
@@ -381,7 +389,11 @@ export const patients = [
         gender: 'male',
         dob: '2000-01-01',
         phone: '555-123-4567',
-        image:assets.profile_pic
+        image:assets.profile_pic,
+        address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     },
     {
         _id: 'pat4',
@@ -391,7 +403,11 @@ export const patients = [
         gender: 'female',
         dob: '2000-05-01',
         phone: '556-123-4567',
-        image:assets.profile_pic
+        image:assets.profile_pic,
+        address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     }
 ];
 
@@ -459,5 +475,80 @@ export const mockAppointments = [
         slotDate: "05_02_2024",
         slotTime: "06:30 PM",
     },
+    {
+        _id: 'appt_006', 
+        amount: 60,
+        cancelled: false,
+        date: 1730918400000, // Nov 6, 2024
+        docId: 'doc2', // Assigned to Doctor 2
+        patId: 'pat3',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "06_11_2024",
+        slotTime: "04:30 PM",
+    },
+    {
+        _id: 'appt_007', 
+        amount: 90,
+        cancelled: false,
+        date: 1731004800000, // Nov 7, 2024
+        docId: 'doc2', // Assigned to Doctor 2
+        patId: 'pat2',
+        isCompleted: false, // Cancelled, no earnings counted
+        payment: false,
+        slotDate: "07_11_2024",
+        slotTime: "10:00 AM",
+    },
+    
+    // --- Appointments for doc3 (Total Earnings: 150 + 200 = 350) ---
+
+    {
+        _id: 'appt_008', 
+        amount: 150,
+        cancelled: false,
+        date: 1731091200000, // Nov 8, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat2',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "08_11_2024",
+        slotTime: "03:00 PM",
+    },
+    {
+        _id: 'appt_009', 
+        amount: 200,
+        cancelled: false,
+        date: 1731177600000, // Nov 9, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat3',
+        isCompleted: true, // Completed and Paid
+        payment: true,
+        slotDate: "09_11_2024",
+        slotTime: "11:00 AM",
+    },
+    {
+        _id: 'appt_010', 
+        amount: 70,
+        cancelled: true,
+        date: 1731264000000, // Nov 10, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat4',
+        isCompleted: false, // Cancelled, no earnings counted
+        payment: true,
+        slotDate: "10_11_2024",
+        slotTime: "04:00 PM",
+    },
+    {
+        _id: 'appt_011', 
+        amount: 95,
+        cancelled: false,
+        date: 1731350400000, // Nov 11, 2024
+        docId: 'doc3', // Assigned to Doctor 3
+        patId: 'pat3',
+        isCompleted: false, // Future appointment
+        payment: false,
+        slotDate: "11_11_2024",
+        slotTime: "08:30 AM",
+    }
     
 ];
