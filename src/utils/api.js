@@ -8,11 +8,79 @@ const API_DELAY = 500; // 0.5 second delay
  * @returns {Promise<Array>} A promise that resolves with all mock appointments.
  */
 
+/**
+ * Simulates fetching appointments for a specific patient.
+ * @param {string} patId - The ID of the currently logged-in patient.
+ * @returns {Promise<Array>} A promise that resolves with the patient's filtered appointments.
+ */
 export const fetchAppointments = () => {
     return new Promise(resolve => {
         setTimeout(() => {
             console.log("API: Successfully retrieved all mock appointments.");
             resolve(mockAppointments);
+        }, API_DELAY);
+    });
+};
+
+export const fetchPatientAppointments = (patId) => {
+    return new Promise((resolve, reject) => {
+        if (!patId) {
+            return reject(new Error("Patient ID is required to fetch appointments."));
+        }
+
+        setTimeout(() => {
+            const patientAppointments = mockAppointments.filter(
+                (appointment) => appointment.patId === patId
+            );
+            resolve(patientAppointments);
+        }, API_DELAY);
+    });
+};
+
+/**
+ * Simulates canceling an appointment.
+ * In a real app, this would update the database.
+ * @param {string} apptId - The ID of the appointment to cancel.
+ * @returns {Promise<string>} A promise that resolves with a success message.
+ */
+export const cancelAppointment = (apptId) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // NOTE: Using a shared mockAppointments array here for simplicity
+            const appointment = mockAppointments.find(a => a._id === apptId);
+            
+            if (!appointment) {
+                return reject(new Error(`Appointment ID ${apptId} not found.`));
+            }
+            
+            // Mock: Set a cancelled status
+            appointment.status = 'Cancelled';
+            appointment.isCompleted = true; // Mark as done/cancelled so it doesn't show up as active
+            
+            resolve(`Appointment ${apptId} has been successfully cancelled.`);
+        }, API_DELAY);
+    });
+};
+
+/**
+ * Simulates the reschedule process. 
+ * NOTE: For simplicity, this mock only marks it as pending reschedule.
+ * @param {string} apptId - The ID of the appointment to reschedule.
+ * @returns {Promise<string>} A promise that resolves with a message about rescheduling.
+ */
+export const rescheduleAppointment = (apptId) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const appointment = mockAppointments.find(a => a._id === apptId);
+            
+            if (!appointment) {
+                return reject(new Error(`Appointment ID ${apptId} not found.`));
+            }
+            
+            // Mock: Mark status for reschedule (real logic would involve selecting a new slot)
+            appointment.status = 'Pending Reschedule';
+            
+            resolve(`Reschedule process initiated for appointment ${apptId}. You can now select a new slot.`);
         }, API_DELAY);
     });
 };

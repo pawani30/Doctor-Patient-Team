@@ -5,14 +5,17 @@ export const PatientContext = createContext();
 
 export const PatientContextProvider = (props) => {
     const [pToken, setPToken] = useState(null); // Initialize as null to handle initial check cleanly
+    const [patientId, setPatientId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     // Initial check to load token from localStorage
     useEffect(() => {
         const token = localStorage.getItem('patientToken');
-        if (token) {
+        const id = localStorage.getItem('patientId');
+        if (token && id) {
             setPToken(token);
+            setPatientId(id);
         }
         setIsLoading(false); // Finished initial loading check
     }, []);
@@ -25,14 +28,17 @@ export const PatientContextProvider = (props) => {
             // Call the API utility function
             const result = await loginPatient(email, password); 
             const tokenValue = result.token;
+            const patientIdValue = result.token;
 
             console.log("Patient Login Success Message:", result.message);
 
             // Save token to localStorage and state
             localStorage.setItem('patientToken', tokenValue); 
             setPToken(tokenValue); 
+             localStorage.setItem('patientId', patientIdValue); // <-- Save ID to local storage
+            setPatientId(patientIdValue);  
             
-            return { success: true, token: tokenValue, message: result.message };
+            return { success: true, token: tokenValue, patId: patientIdValue, message: result.message };
 
         } catch (err) {
             setError(err.message);
@@ -51,13 +57,16 @@ export const PatientContextProvider = (props) => {
     // You would typically add a handleLogout function here too:
     const handleLogout = () => {
         localStorage.removeItem('patientToken');
+        localStorage.removeItem('patientId');
         setPToken(null);
+        setPatientId(null);
         // You might want to navigate to the login page here
     }
 
 
     const value = {
         pToken,
+        patientId,
         setPToken,
         isLoading,
         error,

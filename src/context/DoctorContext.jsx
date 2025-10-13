@@ -8,22 +8,40 @@ export const DoctorContext = createContext(null);
 export const DoctorProvider = ({ children }) => {
     // doctorToken will hold the docId after successful login, starting as null
     const [doctorToken, setDToken] = useState(localStorage.getItem("doctorToken")); 
+    const [currentDoctor, setCurrentDoctor] = useState(null); 
     const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [dashboardData, setDashboardData] = useState(null); 
     
 
+     const findDoctorProfile = (docId) => {
+        return doctors.find(doc => doc._id === docId);
+    };
+
     // Initial check (once on mount) to see if a token exists in localStorage
     useEffect(() => {
         const token = localStorage.getItem('doctorToken');
         if (token) {
             setDToken(token);
+            const profile = findDoctorProfile(token);
+            setCurrentDoctor(profile);
         } else {
             // If no token, we are done loading the initial authentication check
             setIsLoading(false);
         }
     }, []); // Runs ONLY once on mount
+
+    // 🚨 NEW useEffect: Manages the full doctor profile object
+    // Runs when doctorToken changes (e.g., after login/logout)
+    useEffect(() => {
+        if (doctorToken) {
+            const profile = findDoctorProfile(doctorToken);
+            setCurrentDoctor(profile);
+        } else {
+            setCurrentDoctor(null); // Clear profile on logout
+        }
+    }, [doctorToken]);
 
     // Data Fetching: Runs when the doctorToken state changes (login or logout)
     useEffect(() => {
@@ -79,10 +97,15 @@ export const DoctorProvider = ({ children }) => {
            localStorage.setItem('doctorToken', tokenValue); // Store the actual ID ('doc1', 'doc2', etc.)
             setDToken(tokenValue);
             
+            const profile = findDoctorProfile(tokenValue);
+            setCurrentDoctor(profile); 
+
+
                 await loadDashboardData(tokenValue);
             return result;
         } catch (err) {
             setError(err.message);
+            setCurrentDoctor(null);
             setIsLoading(false); 
             return { success: false, message: err.message };
         }
@@ -96,7 +119,9 @@ export const DoctorProvider = ({ children }) => {
             await logoutDoctor();
             localStorage.removeItem('doctorToken');
             setDToken(null);
+            setCurrentDoctor(null);
             setDashboardData(null); 
+            
         } catch (err) {
             setError(err.message);
         } finally {
@@ -135,6 +160,7 @@ export const DoctorProvider = ({ children }) => {
     const value = {
         doctorToken,
         setDToken,
+        currentDoctor, 
         appointments, 
         setAppointments,
         isLoading,
