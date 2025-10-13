@@ -129,7 +129,7 @@ export const doctors = [
     },
     {
         _id: 'doc3',
-        name: 'Dr. Sarah Patel',
+        name: 'Dr. Rishi Patel',
         image: doc3,
         speciality: 'Dermatologist',
         degree: 'MBBS',
@@ -446,7 +446,7 @@ export const mockAppointments = [
         date: 1730500000000,
         docId: 'doc2', // Foreign Key
         patId: 'pat3', // Foreign Key
-        isCompleted: true,
+        isCompleted: false,
         payment: true,
         slotDate: "05_12_2024",
         slotTime: "06:30 PM",
@@ -458,7 +458,7 @@ export const mockAppointments = [
         date: 1730500000000,
         docId: 'doc1', // Foreign Key
         patId: 'pat4', // Foreign Key
-        isCompleted: true,
+        isCompleted: false,
         payment: false,
         slotDate: "05_02_2024",
         slotTime: "06:30 PM",
@@ -469,8 +469,8 @@ export const mockAppointments = [
         cancelled: true,
         date: 1730500000000,
         docId: 'doc3', // Foreign Key
-        patId: 'pat2', // Foreign Key
-        isCompleted: true,
+        patId: 'pat1', // Foreign Key
+        isCompleted: false,
         payment: false,
         slotDate: "05_02_2024",
         slotTime: "06:30 PM",
@@ -482,7 +482,7 @@ export const mockAppointments = [
         date: 1730918400000, // Nov 6, 2024
         docId: 'doc2', // Assigned to Doctor 2
         patId: 'pat3',
-        isCompleted: true, // Completed and Paid
+        isCompleted: false, // Completed and Paid
         payment: true,
         slotDate: "06_11_2024",
         slotTime: "04:30 PM",
@@ -509,7 +509,7 @@ export const mockAppointments = [
         date: 1731091200000, // Nov 8, 2024
         docId: 'doc3', // Assigned to Doctor 3
         patId: 'pat2',
-        isCompleted: true, // Completed and Paid
+        isCompleted: false, // Completed and Paid
         payment: true,
         slotDate: "08_11_2024",
         slotTime: "03:00 PM",
@@ -521,7 +521,7 @@ export const mockAppointments = [
         date: 1731177600000, // Nov 9, 2024
         docId: 'doc3', // Assigned to Doctor 3
         patId: 'pat3',
-        isCompleted: true, // Completed and Paid
+        isCompleted: false, // Completed and Paid
         payment: true,
         slotDate: "09_11_2024",
         slotTime: "11:00 AM",
