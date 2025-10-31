@@ -129,7 +129,7 @@ export const doctors = [
     },
     {
         _id: 'doc3',
-        name: 'Dr. Sarah Patel',
+        name: 'Dr. Rishi Patel',
         image: doc3,
         speciality: 'Dermatologist',
         degree: 'MBBS',
@@ -336,7 +336,7 @@ export const doctors = [
         password: 'pass15'
     },
     {
-        _id: 'doc2',
+        _id: 'doc16',
         name: 'Dr. Emily Larson',
         image: doc2,
         speciality: 'Gastroenterologist',
@@ -358,10 +358,14 @@ export const patients = [
         name: 'Alice Johnson',
         email: 'patient1@example.com',
         password: 'patient1pass',
-        gender: 'female',
+        gender: 'Female',
         dob: '1990-05-15',
         phone: '123-456-7890',
-         image:assets.profile_pic
+         image:assets.profile_pic,
+         address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     },
     {
         _id: 'pat2',
@@ -371,7 +375,11 @@ export const patients = [
         gender: 'male',
         dob: '1985-11-20',
         phone: '987-654-3210',
-         image:assets.profile_pic
+         image:assets.profile_pic,
+         address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     },
     {
         _id: 'pat3',
@@ -381,7 +389,25 @@ export const patients = [
         gender: 'male',
         dob: '2000-01-01',
         phone: '555-123-4567',
-        image:assets.profile_pic
+        image:assets.profile_pic,
+        address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
+    },
+    {
+        _id: 'pat4',
+        name: 'Lily Bloom',
+        email: 'patient4@example.com',
+        password: 'patient4pass',
+        gender: 'female',
+        dob: '2000-05-01',
+        phone: '556-123-4567',
+        image:assets.profile_pic,
+        address: {
+            line1: '27th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        },
     }
 ];
 
@@ -420,11 +446,12 @@ export const mockAppointments = [
         date: 1730500000000,
         docId: 'doc2', // Foreign Key
         patId: 'pat3', // Foreign Key
-        isCompleted: true,
+        isCompleted: false,
         payment: true,
         slotDate: "05_12_2024",
         slotTime: "06:30 PM",
     },
+<<<<<<< HEAD
        {
         _id: 'appt_004', 
         amount: 80,
@@ -449,6 +476,31 @@ export const mockAppointments = [
         payment: true,
         slotDate: "05_11_2024",
         slotTime: "01:00 PM",
+=======
+    {
+        _id: 'appt_004', 
+        amount: 90,
+        cancelled: true,
+        date: 1730500000000,
+        docId: 'doc1', // Foreign Key
+        patId: 'pat4', // Foreign Key
+        isCompleted: false,
+        payment: false,
+        slotDate: "05_02_2024",
+        slotTime: "06:30 PM",
+    },
+    {
+        _id: 'appt_005', 
+        amount: 80,
+        cancelled: true,
+        date: 1730500000000,
+        docId: 'doc3', // Foreign Key
+        patId: 'pat1', // Foreign Key
+        isCompleted: false,
+        payment: false,
+        slotDate: "05_02_2024",
+        slotTime: "06:30 PM",
+>>>>>>> upstream/master
     },
     {
         _id: 'appt_006', 
@@ -456,8 +508,13 @@ export const mockAppointments = [
         cancelled: false,
         date: 1730918400000, // Nov 6, 2024
         docId: 'doc2', // Assigned to Doctor 2
+<<<<<<< HEAD
         patId: 'pat5',
         isCompleted: true, // Completed and Paid
+=======
+        patId: 'pat3',
+        isCompleted: false, // Completed and Paid
+>>>>>>> upstream/master
         payment: true,
         slotDate: "06_11_2024",
         slotTime: "04:30 PM",
@@ -483,8 +540,13 @@ export const mockAppointments = [
         cancelled: false,
         date: 1731091200000, // Nov 8, 2024
         docId: 'doc3', // Assigned to Doctor 3
+<<<<<<< HEAD
         patId: 'pat6',
         isCompleted: true, // Completed and Paid
+=======
+        patId: 'pat2',
+        isCompleted: false, // Completed and Paid
+>>>>>>> upstream/master
         payment: true,
         slotDate: "08_11_2024",
         slotTime: "03:00 PM",
@@ -496,7 +558,11 @@ export const mockAppointments = [
         date: 1731177600000, // Nov 9, 2024
         docId: 'doc3', // Assigned to Doctor 3
         patId: 'pat3',
+<<<<<<< HEAD
         isCompleted: true, // Completed and Paid
+=======
+        isCompleted: false, // Completed and Paid
+>>>>>>> upstream/master
         payment: true,
         slotDate: "09_11_2024",
         slotTime: "11:00 AM",
@@ -519,10 +585,18 @@ export const mockAppointments = [
         cancelled: false,
         date: 1731350400000, // Nov 11, 2024
         docId: 'doc3', // Assigned to Doctor 3
+<<<<<<< HEAD
         patId: 'pat7',
+=======
+        patId: 'pat3',
+>>>>>>> upstream/master
         isCompleted: false, // Future appointment
         payment: false,
         slotDate: "11_11_2024",
         slotTime: "08:30 AM",
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> upstream/master
 ];
